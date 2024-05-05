@@ -11,11 +11,23 @@ public class VerticalOrderTraversal{
         }
     }
 
-    public static void verticalTraversal(int lis[]){
+    public static void verticalOrderTraversal(int lis[]){
         // First convert it into graph
         Node root = new Node(lis[0]);
 
         list_to_tree(root, lis);
+
+        int minMax [] = new int[2];
+        finding_hd(root, minMax, 0);
+        System.out.println("Min: " + minMax[0] + " Max: " + minMax[1]);
+
+        System.out.println("Printing Vertical Order");
+        
+        for(int i = minMax[0]; i <= minMax[1]; i++){
+            System.out.print(i + ": ");
+            printing_vertical_order(root, i, 0);
+            System.out.println("");
+        }
     }
 
     public static void list_to_tree(Node root, int[] lis){
@@ -37,12 +49,22 @@ public class VerticalOrderTraversal{
                 queue.add(temp);
                 curr.left = temp;
             }
+            // if(lis[i] == 'N'){
+            //     Node temp = new Node (-1);
+            //     queue.add(temp);
+            //     curr.left = temp;
+            // }
             i++;
             if(i < lis.length && lis[i] != 'N'){
                 Node temp = new Node(lis[i]);
                 queue.add(temp);
                 curr.right = temp;
             }
+            // if(i < lis.length && lis[i] == 'N'){
+            //     Node temp = new Node(-1);
+            //     queue.add(temp);
+            //     curr.right = temp;
+            // }
             i++;
 
             // for(int i = 1; i < len; i = i + 2){
@@ -58,6 +80,34 @@ public class VerticalOrderTraversal{
             // }
         }
         printTree(root);
+    }
+
+    public static void finding_hd(Node root, int [] minMax, int hd){
+        if(root == null){
+            return;
+        }
+        minMax[0] = Math.min(minMax[0], hd);
+        minMax[1] = Math.max(minMax[1], hd);
+
+        if(root.left != null){
+            finding_hd(root.left, minMax, hd-1);
+        }
+        if(root.right != null){
+            finding_hd(root.right, minMax, hd+1);
+        }
+    }
+
+    public static void printing_vertical_order(Node root, int line, int hd){
+        if(root == null){
+            return;
+        }
+        // System.out.print(i + ": ");
+        if(hd == line){
+            System.out.print(root.data + " ");
+        }
+
+        printing_vertical_order(root.left, line, hd-1);
+        printing_vertical_order(root.right, line, hd+1);
     }
 
     public static void printTree(Node root) {
@@ -80,7 +130,7 @@ public class VerticalOrderTraversal{
             visited.add(curr);
 
         }
-
+        System.out.println("");
     }
 
     public static void main(String[] args) {
@@ -90,7 +140,7 @@ public class VerticalOrderTraversal{
         int lis [] = new int[lis0.length];
 
         for(int i = 0; i < lis0.length; i++){
-            if(lis0[i] == "N"){
+            if(lis0[i].toCharArray()[0] == 'N'){
                 lis[i] = 'N';
             }
             else{
@@ -98,7 +148,7 @@ public class VerticalOrderTraversal{
             }
         }
 
-        verticalTraversal(lis);
+        verticalOrderTraversal(lis);
         sc.close();
     }
 }
@@ -239,7 +289,7 @@ public class VerticalOrderTraversal{
 // //     public int minimum;
 // // }
 
-// // public class VerticalTraversalExample {
+// // public class VerticalOrderTraversalExample {
 // //     TreeNode r;
 // //     Values v = new Values();
 
@@ -295,8 +345,8 @@ public class VerticalOrderTraversal{
 
 // //     // main method
 // //     public static void main(String argvs[]) {
-// //         // creating an object of the class VerticalTraversalExample
-// //         VerticalTraversalExample tree = new VerticalTraversalExample();
+// //         // creating an object of the class VerticalOrderTraversalExample
+// //         VerticalOrderTraversalExample tree = new VerticalOrderTraversalExample();
 // //         // constructing the binary tree as shown
 // //         // in the above diagram
 // //         tree.r = new TreeNode(4);

@@ -23,9 +23,9 @@ public class VerticalOrderTraversal{
 
         System.out.println("Printing Vertical Order");
         
-        for(int i = minMax[0]; i <= minMax[1]; i++){
-            System.out.print(i + ": ");
-            printing_vertical_order(root, i, 0);
+        for(int line = minMax[0]; line <= minMax[1]; line++){
+            System.out.print(line + ": ");
+            printing_vertical_order(root, line, 0);
             System.out.println("");
         }
     }
